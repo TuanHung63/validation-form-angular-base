@@ -16,6 +16,7 @@
   </div>
   <input
     (changeDate)="onChange($event)"
+    (keyup.enter)="onChange($event)"
     datepicker
     maxDate="'01/01/2100'"
     datepicker-autohide
