@@ -1,35 +1,24 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewEncapsulation,
-  forwardRef,
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { Component, Input, ViewEncapsulation, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
+  selector: 'app-text-area',
+  templateUrl: './text-area.component.html',
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
+      useExisting: forwardRef(() => TextAreaComponent),
       multi: true,
     },
   ],
 })
-export class InputComponent implements ControlValueAccessor {
+export class TextAreaComponent implements ControlValueAccessor {
   @Input() placeholder = 'Enter';
   @Input() disabled = false;
-  @Input() size: 'large' | 'small' | 'default' = 'default';
-  @Input() max!: number;
-  @Input() min!: number;
-  @Input() maxLength!: number;
-  constructor(){}
+  @Input() rows: number=4;
+  @Input() cols: number=10;
+  constructor() {}
   value!: string;
 
   _onChange!: (_: any) => void;

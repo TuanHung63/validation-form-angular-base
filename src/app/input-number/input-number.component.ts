@@ -1,35 +1,25 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewEncapsulation,
-  forwardRef,
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { Component, Input, ViewEncapsulation, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
+  selector: 'app-input-number',
+  templateUrl: './input-number.component.html',
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
+      useExisting: forwardRef(() => InputNumberComponent),
       multi: true,
     },
   ],
 })
-export class InputComponent implements ControlValueAccessor {
+export class InputNumberComponent implements ControlValueAccessor {
   @Input() placeholder = 'Enter';
   @Input() disabled = false;
-  @Input() size: 'large' | 'small' | 'default' = 'default';
-  @Input() max!: number;
-  @Input() min!: number;
-  @Input() maxLength!: number;
-  constructor(){}
+  @Input() max: number = 9999;
+  @Input() min: number = -9999;
+  @Input() step: number = 1;
+  constructor() {}
   value!: string;
 
   _onChange!: (_: any) => void;
