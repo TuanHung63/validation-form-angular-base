@@ -17,6 +17,8 @@ import * as DateFns from 'date-fns';
 export class DatePickerComponent implements ControlValueAccessor {
   @Input() placeholder = 'Select Date';
   @Input() disabled = false;
+  @Input() minDate: Date | null = null;
+  @Input() maxDate: Date | null = null;
   constructor() {}
   value!: string | null;
 
@@ -24,15 +26,10 @@ export class DatePickerComponent implements ControlValueAccessor {
   _onTouched!: (_: any) => void;
 
   onChange(event: any): void {
-    const value: string | null = DateFns.isValid(event.detail.date)
-      ? DateFns.format(event.detail.date, 'dd/MM/yyyy')
+    const value: string | null = DateFns.isValid(event)
+      ? DateFns.format(event, 'dd/MM/yyyy')
       : null;
     this.value = value;
-    // const parsedDate = value
-    //   ? DateFns.parse(value, 'dd/MM/yyyy', new Date())
-    //   : null;
-    // console.log(parsedDate);
-
     if (this._onChange) {
       this._onChange(value);
     }
