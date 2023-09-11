@@ -13,6 +13,12 @@ import { InputNumberComponent } from './input-number/input-number.component';
 import { InputPasswordComponent } from './input-password/input-password.component';
 import { TextAreaComponent } from './text-area/text-area.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import {MatSelectModule} from '@angular/material/select';
+
+const MATERIAL=[
+  MatSelectModule
+]
+
 
 @NgModule({
   declarations: [
@@ -27,7 +33,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     TextAreaComponent,
     DatePickerComponent,
   ],
-  imports: [BrowserModule,BrowserAnimationsModule, ReactiveFormsModule, FormsModule],
+  imports: [BrowserModule,BrowserAnimationsModule, ReactiveFormsModule, FormsModule,...MATERIAL],
   providers: [],
   bootstrap: [AppComponent],
 })

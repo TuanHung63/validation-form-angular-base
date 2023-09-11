@@ -33,9 +33,9 @@ export interface OptionGroupLabel {
 })
 export class SelectComponent implements ControlValueAccessor, OnInit {
   @Input() options: OptionModel<any>[] | null = [];
-  @Input() disabled = false;
   @Input() multiple = false;
-
+  @Input() placeholder = 'Select';
+  @Input() disabled = false;
   filteredOptions: OptionModel<any>[] | null = [];
   value!: string;
 

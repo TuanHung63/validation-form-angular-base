@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OptionModel } from '../select/select.component';
 import { IColumnConfig } from '../table/table.component';
 import { ValidatorUtil } from '../utils/validator.util';
@@ -92,7 +92,7 @@ constructor(private formBuilder: FormBuilder) {
 ngOnInit() {
   this.form = this.formBuilder.group(
     {
-      name: ['', [ValidatorUtil.required(), ValidatorUtil.maxLength(5)]],
+      name: ['', [Validators.required,Validators.maxLength(5),Validators.minLength(1),Validators.max(10),Validators.min(5)]],
       code: ['', [ValidatorUtil.required(), ValidatorUtil.maxLength(5)]],
       option: [],
     }

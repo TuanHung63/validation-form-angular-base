@@ -22,6 +22,21 @@ export class FormControlComponent {
     | FormControlDirective;
   isError = false;
   message: string = '';
+  private errorMessages: { [key: string]: any } = {
+    required: (controls: any) => 'Vui lòng nhập đầy đủ thông tin',
+    pattern: (controls: any) => 'Vui lòng nhập đúng định dạng',
+    email: (controls: any) => 'Vui lòng nhập đúng định dạng Email',
+    minlength: (controls: any) =>
+      `
+      Vui lòng nhập tối thiểu ${controls?.requiredLength || '0'} ký tự`,
+    maxlength: (controls: any) =>
+      `
+      Vui lòng nhập tối đa ${controls?.requiredLength || '0'} ký tự`,
+    min: (controls: any) =>
+      `Vui lòng nhập số lớn hơn hoặc bằng ${controls?.min || 0}`,
+    max: (controls: any) =>
+      `Vui lòng nhập số nhỏ hơn hoặc bằng ${controls?.max || 0}`,
+  };
 
   constructor(
     private elRef: ElementRef,
@@ -31,7 +46,11 @@ export class FormControlComponent {
   ngAfterViewInit(): void {
     this.content!.statusChanges!.subscribe((status) => {
       if (status === 'INVALID') {
-        this.showError(this.content?.control!.errors!['message']);
+        const key = Object.keys(this.content?.control!.errors!)[0];
+        const message = this.errorMessages[key](
+          this.content?.control!.errors![key]
+        );
+        this.showError(message);
       } else {
         this.removeError();
       }

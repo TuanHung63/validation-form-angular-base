@@ -5,11 +5,22 @@
   <app-input></app-input>
 </div>
 <div class="mb-2">
-  <app-input-number></app-input-number>
+  <app-input-number ></app-input-number>
 </div>
 <div class="mb-2">
   <app-text-area></app-text-area>
 </div>
 <div class="mb-2">
   <app-date-picker></app-date-picker>
+</div>
+<div class="mb-2">
+  <app-select [options]="options"></app-select>
+</div>
+<div [formGroup]="form">
+  <app-form-control>
+  <!-- <app-input formControlName="name"></app-input> -->
+  <div>test</div>
+  <app-input-number formControlName="name"></app-input-number>
+
+  </app-form-control>
 </div>
