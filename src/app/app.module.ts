@@ -13,12 +13,11 @@ import { InputNumberComponent } from './input-number/input-number.component';
 import { InputPasswordComponent } from './input-password/input-password.component';
 import { TextAreaComponent } from './text-area/text-area.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
-import {MatSelectModule} from '@angular/material/select';
-
-const MATERIAL=[
-  MatSelectModule
-]
-
+import { MatSelectModule } from '@angular/material/select';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+const MATERIAL = [MatSelectModule];
 
 @NgModule({
   declarations: [
@@ -33,8 +32,25 @@ const MATERIAL=[
     TextAreaComponent,
     DatePickerComponent,
   ],
-  imports: [BrowserModule,BrowserAnimationsModule, ReactiveFormsModule, FormsModule,...MATERIAL],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ...MATERIAL,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

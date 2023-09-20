@@ -1,0 +1,12 @@
+{
+  "form_validation": {
+    "required": "Vui lòng nhập đầy đủ thông tin",
+    "pattern": "Vui lòng nhập đúng định dạng",
+    "email": "Vui lòng nhập đúng định dạng email",
+    "minlength": "Vui lòng nhập tối thiểu",
+    "maxlength": "Vui lòng nhập tối đa",
+    "min": "Vui lòng nhập số lớn hơn hoặc bằng",
+    "max": "Vui lòng nhập số nhỏ hơn hoặc bằng",
+    "characters": "ký tự"
+  }
+}

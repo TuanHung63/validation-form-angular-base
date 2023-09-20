@@ -1,0 +1,12 @@
+{
+  "form_validation": {
+    "required": "Please enter complete information",
+    "pattern": "Please enter the correct format",
+    "email": "Please enter the correct email format",
+    "minlength": "Please enter a minimum of",
+    "maxlength": "Please enter a maximum of",
+    "min": "Please enter a number greater than or equal to",
+    "max": "Please enter a number less than or equal to",
+    "characters": "characters"
+  }
+}

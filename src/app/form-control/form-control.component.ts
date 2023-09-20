@@ -1,64 +1,70 @@
-import {
-  AfterViewInit,
-  Component,
-  ContentChild,
-  ElementRef,
-  Renderer2,
-} from '@angular/core';
+import { AfterViewInit, Component, ContentChild, OnInit } from '@angular/core';
 import {
   FormControlDirective,
   FormControlName,
   NgControl,
 } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-form-control',
   templateUrl: './form-control.component.html',
   styles: [],
 })
-export class FormControlComponent {
+export class FormControlComponent implements AfterViewInit, OnInit {
   @ContentChild(NgControl, { static: false }) content?:
     | FormControlName
     | FormControlDirective;
   isError = false;
   message: string = '';
+  patternMessage: string = '';
   private errorMessages: { [key: string]: any } = {
-    required: (controls: any) => 'Vui lòng nhập đầy đủ thông tin',
-    pattern: (controls: any) => 'Vui lòng nhập đúng định dạng',
-    email: (controls: any) => 'Vui lòng nhập đúng định dạng Email',
+    required: (controls: any) =>
+      `${this.translate.instant('form_validation.required')}`,
+    pattern: (controls: any) =>
+      this.patternMessage
+        ? this.patternMessage
+        : `${this.translate.instant('form_validation.pattern')}`,
+    email: (controls: any) =>
+      `${this.translate.instant('form_validation.email')}`,
     minlength: (controls: any) =>
-      `
-      Vui lòng nhập tối thiểu ${controls?.requiredLength || '0'} ký tự`,
+      `${this.translate.instant('form_validation.minlength')} ${
+        controls?.requiredLength || '0'
+      } ${this.translate.instant('form_validation.characters')}`,
     maxlength: (controls: any) =>
-      `
-      Vui lòng nhập tối đa ${controls?.requiredLength || '0'} ký tự`,
+      `${this.translate.instant('form_validation.maxlength')} ${
+        controls?.requiredLength || '0'
+      } ${this.translate.instant('form_validation.characters')}`,
     min: (controls: any) =>
-      `Vui lòng nhập số lớn hơn hoặc bằng ${controls?.min || 0}`,
+      `${this.translate.instant('form_validation.min')} ${controls?.min || 0}.`,
     max: (controls: any) =>
-      `Vui lòng nhập số nhỏ hơn hoặc bằng ${controls?.max || 0}`,
+      `${this.translate.instant('form_validation.max')} ${controls?.max || 0}.`,
   };
 
-  constructor(
-    private elRef: ElementRef,
-    // private ngControl: NgControl,
-    private renderer: Renderer2
-  ) {}
+  constructor(private translate: TranslateService) {}
+  ngOnInit(): void {
+    this.translate.onLangChange.subscribe((lang: string) => {
+      const key = Object.keys(this.content?.control!.errors!)[0];
+      this.message = this.errorMessages[key](
+        this.content?.control!.errors![key]
+      );
+    });
+  }
   ngAfterViewInit(): void {
     this.content!.statusChanges!.subscribe((status) => {
       if (status === 'INVALID') {
         const key = Object.keys(this.content?.control!.errors!)[0];
-        const message = this.errorMessages[key](
+        this.message = this.errorMessages[key](
           this.content?.control!.errors![key]
         );
-        this.showError(message);
+        this.showError();
       } else {
         this.removeError();
       }
     });
   }
-  private showError(message: string) {
+  private showError() {
     this.isError = true;
-    this.message = message;
   }
 
   private removeError(): void {

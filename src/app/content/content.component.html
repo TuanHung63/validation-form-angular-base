@@ -16,6 +16,12 @@
 <div class="mb-2">
   <app-select [options]="options"></app-select>
 </div>
+<select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
+  <option *ngFor="let language of translate.getLangs()" [value]="language"
+    [selected]="language === translate.currentLang">
+    {{ language }}
+  </option>
+</select>
 <div [formGroup]="form">
   <app-form-control>
   <!-- <app-input formControlName="name"></app-input> -->
@@ -24,3 +30,4 @@
 
   </app-form-control>
 </div>
+<button (click)="onClick()">click here</button>

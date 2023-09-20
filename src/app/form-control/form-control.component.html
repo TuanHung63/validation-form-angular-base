@@ -1,4 +1,4 @@
 <div class="flex flex-col">
     <ng-content ></ng-content>
-    <div *ngIf="isError" class="text-[#FF0000]">{{message}}</div>
+    <div *ngIf="isError" class="text-[#FF0000]">{{message | translate}}</div>
 </div>
